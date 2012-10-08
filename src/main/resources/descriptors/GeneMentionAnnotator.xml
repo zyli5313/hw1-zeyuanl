@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<collectionReaderDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>edu.lti.cmu.hw1.GeneMentionAnnotator</implementationName>
+  <processingResourceMetaData>
+    <name>Gene mention annotator</name>
+    <description/>
+    <version>1.0</version>
+    <vendor>The Apache Software Foundation</vendor>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="descriptors.GeneMentionTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection>
+      <fsIndexes>
+        <fsIndexDescription>
+          <label>edu.lti.cmu.hw1.idx.gmasc</label>
+          <typeName>edu.lti.cmu.hw1.typesys.GeneMention</typeName>
+          <kind>sorted</kind>
+          <keys>
+            <fsIndexKey>
+              <featureName>id</featureName>
+              <comparator>standard</comparator>
+            </fsIndexKey>
+          </keys>
+        </fsIndexDescription>
+      </fsIndexes>
+    </fsIndexCollection>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">edu.lti.cmu.hw1.typesys.GeneMention</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>false</multipleDeploymentAllowed>
+      <outputsNewCASes>true</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+  <resourceManagerConfiguration/>
+</collectionReaderDescription>
