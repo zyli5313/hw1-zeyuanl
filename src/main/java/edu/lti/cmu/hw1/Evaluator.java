@@ -75,6 +75,7 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
       throw new ResourceInitializationException(
               ResourceInitializationException.CONFIG_SETTING_ABSENT, new Object[] { "outputFile" });
     }
+    // TODO: try branching
     // If specified output directory does not exist, try to create it
     outFile = new File(oPath.trim());
     if (outFile.getParentFile() != null && !outFile.getParentFile().exists()) {
