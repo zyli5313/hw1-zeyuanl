@@ -60,7 +60,16 @@ public class GeneMention extends Annotation {
   @generated modifiable */
   private void readObject() {/*default - does nothing empty block */}
      
- 
+  @Override
+  public boolean equals(Object other){
+      if (other == null) return false;
+      if (other == this) return true;
+      if (!(other instanceof GeneMention))return false;
+      GeneMention gm = (GeneMention) other;
+      return gm.getId().equals(this.getId()) &&
+              gm.getStart() == this.getStart() &&
+              gm.getEnd() == this.getEnd();
+  }
     
   //*--------------*
   //* Feature: id
