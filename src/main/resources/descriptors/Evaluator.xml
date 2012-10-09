@@ -15,12 +15,24 @@
         <multiValued>false</multiValued>
         <mandatory>false</mandatory>
       </configurationParameter>
+      <configurationParameter>
+        <name>goldFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
     </configurationParameters>
     <configurationParameterSettings>
       <nameValuePair>
         <name>outputFile</name>
         <value>
           <string>src/main/resources/data/eval.txt</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>goldFile</name>
+        <value>
+          <string>src/main/resources/data/sample.out</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

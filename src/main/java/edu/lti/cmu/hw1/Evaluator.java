@@ -19,10 +19,15 @@
 
 package edu.lti.cmu.hw1;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
@@ -55,6 +60,8 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
   File outFile;
 
   FileWriter fileWriter;
+  
+  private String mGoldFile;
 
   public Evaluator() {
   }
@@ -69,7 +76,8 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
 
     // extract configuration parameter settings
     String oPath = (String) getUimaContext().getConfigParameterValue("outputFile");
-
+    mGoldFile = (String) getUimaContext().getConfigParameterValue("goldFile");
+    
     // Output file should be specified in the descriptor
     if (oPath == null) {
       throw new ResourceInitializationException(
@@ -112,11 +120,15 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
       throw new ResourceProcessException(e);
     }
 
-    /*
-     * boolean titleP = false; String docUri = null; Iterator it =
-     * jcas.getAnnotationIndex(SourceDocInfo.type).iterator(); if (it.hasNext()) { SourceDocInfo
-     * srcDocInfo = (SourceDocInfo) it.next(); docUri = srcDocInfo.getUri(); }
-     */
+    // Read golden standard
+    List<String> goldList = readGoldGM();
+    StringBuffer sb = new StringBuffer();
+    for(String str : goldList)
+      sb.append(str);
+    String goldStr = sb.toString();
+    
+    int tpos = 0, fneg = 0, goldsize = goldList.size(), possize = 0;
+    int idx = 0, fromIndex = 0;
 
     // iterate and print annotations
     //FSIndex gmIndex = jcas.getAnnotationIndex(GeneMention.type);
@@ -126,14 +138,68 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
     while (annotationIter.hasNext()) {
       GeneMention annot = (GeneMention) annotationIter.next();
       // System.out.println( annot.getType().getName() + " "+aText);
-      try {
-        fileWriter.write(annot.getId() + "|" + annot.getBegin() + " " + annot.getEnd() + "|"
-                + annot.getTag() + "\n");
-        fileWriter.flush();
-      } catch (IOException e) {
-        throw new ResourceProcessException(e);
+      
+      /*int goldid = Integer.parseInt(goldList.get(idx).split("[|]")[0]);
+      while(goldid < Integer.parseInt(annot.getId())) {
+        idx++;
+        goldid = Integer.parseInt(goldList.get(idx).split("[|]")[0]);
       }
+      if(goldid == Integer.parseInt(annot.getId())) {
+        int begin = Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0]);
+        while(begin < annot.getBegin()) {
+          idx++;
+          begin = Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0]);
+        }
+        if(begin == Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0])) {
+          if(annot.getEnd() == Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[1]))
+            tpos++;
+        }
+      }*/
+      String str = annot.getId()+"|"+annot.getBegin()+" "+annot.getEnd()+"|"+annot.getTag();
+      int find = goldStr.indexOf(str, fromIndex);
+      if(find != -1) {
+        fromIndex = find;
+        tpos++;
+      }
+      possize++;
     }
+    double recall = (double) tpos / goldsize;
+    double precision = (double) tpos / possize;
+    double fvalue = (2*recall*precision) / (precision+recall);
+    
+    try {
+      fileWriter.write("pre:"+precision+"\trec:"+recall+"\tfmeasure:"+fvalue+"\n");
+      fileWriter.flush();
+    } catch (IOException e) {
+      throw new ResourceProcessException(e);
+    }
+  }
+  
+  /*
+   * Read gold standard gene mentions from sample.out
+   * */
+  List<String> readGoldGM() {
+    List<String> gmlist = new ArrayList<String>();
+    BufferedReader br;
+    String line;
+    try {
+      br = new BufferedReader(new FileReader(mGoldFile));
+      while((line = br.readLine()) != null) {
+        gmlist.add(line);
+      }
+      br.close();
+    } catch (FileNotFoundException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (NumberFormatException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    
+    return gmlist;
   }
 
   /**

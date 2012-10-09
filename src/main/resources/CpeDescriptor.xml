@@ -29,7 +29,7 @@
             </descriptor>
         </collectionIterator>
     </collectionReader>
-    <casProcessors casPoolSize="2" processingUnitThreadCount="1">
+    <casProcessors casPoolSize="3" processingUnitThreadCount="1">
 		<casProcessor deployment="integrated" name="Gene Mention Annotator">
 	        <descriptor>
                 <import location ="descriptors/GeneMentionAnnotator.xml"/>
@@ -40,6 +40,19 @@
                 <errorRateThreshold action="terminate" value="100/1000"/>
                 <maxConsecutiveRestarts action="terminate" value="30"/>
                 <timeout max="100000"/>
+            </errorHandling>
+            <checkpoint batch="10000"/>
+        </casProcessor>
+        <casProcessor deployment="integrated" name="Evaluator">
+            <descriptor>
+                <import location="descriptors/Evaluator.xml"/>
+            </descriptor>
+            <deploymentParameters/>
+            <filter></filter>
+            <errorHandling>
+                <errorRateThreshold action="terminate" value="100/1000"/>
+                <maxConsecutiveRestarts action="terminate" value="30"/>
+                <timeout max="10000"/>
             </errorHandling>
             <checkpoint batch="10000"/>
         </casProcessor>
