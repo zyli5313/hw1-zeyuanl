@@ -30,6 +30,35 @@
         </collectionIterator>
     </collectionReader>
     <casProcessors casPoolSize="3" processingUnitThreadCount="1">
+    	
+    	<casProcessor deployment="integrated" name="TrainCRF">
+	        <descriptor>
+                <import location ="descriptors/TrainCRF.xml"/>
+            </descriptor>
+            <deploymentParameters/>
+            <filter></filter>
+            <errorHandling>
+                <errorRateThreshold action="terminate" value="100/1000"/>
+                <maxConsecutiveRestarts action="terminate" value="30"/>
+                <timeout max="100000"/>
+            </errorHandling>
+            <checkpoint batch="10000"/>
+        </casProcessor>
+        <casProcessor deployment="integrated" name="CRF Gene Mention Annotator">
+	        <descriptor>
+                <import location ="descriptors/GeneMentionAnnotatorCRF.xml"/>
+            </descriptor>
+            <deploymentParameters/>
+            <filter></filter>
+            <errorHandling>
+                <errorRateThreshold action="terminate" value="100/1000"/>
+                <maxConsecutiveRestarts action="terminate" value="30"/>
+                <timeout max="100000"/>
+            </errorHandling>
+            <checkpoint batch="10000"/>
+        </casProcessor>
+        
+        <!-- 
 		<casProcessor deployment="integrated" name="Gene Mention Annotator">
 	        <descriptor>
                 <import location ="descriptors/GeneMentionAnnotator.xml"/>
@@ -43,9 +72,9 @@
             </errorHandling>
             <checkpoint batch="10000"/>
         </casProcessor>
-        <casProcessor deployment="integrated" name="Evaluator">
+        <casProcessor deployment="integrated" name="TrainFileWriter">
             <descriptor>
-                <import location="descriptors/Evaluator.xml"/>
+                <import location="descriptors/TrainFileWriter.xml"/>
             </descriptor>
             <deploymentParameters/>
             <filter></filter>
@@ -56,9 +85,23 @@
             </errorHandling>
             <checkpoint batch="10000"/>
         </casProcessor>
+         -->
         <casProcessor deployment="integrated" name="Annotation Writer">
             <descriptor>
                 <import location="descriptors/AnnotationPrinter.xml"/>
+            </descriptor>
+            <deploymentParameters/>
+            <filter></filter>
+            <errorHandling>
+                <errorRateThreshold action="terminate" value="100/1000"/>
+                <maxConsecutiveRestarts action="terminate" value="30"/>
+                <timeout max="10000"/>
+            </errorHandling>
+            <checkpoint batch="10000"/>
+        </casProcessor>
+        <casProcessor deployment="integrated" name="Evaluator">
+            <descriptor>
+                <import location="descriptors/Evaluator.xml"/>
             </descriptor>
             <deploymentParameters/>
             <filter></filter>

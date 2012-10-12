@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<casConsumerDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <implementationName>edu.lti.cmu.hw1.TrainFileWriter</implementationName>
+  <processingResourceMetaData>
+    <name>TrainFileWriter</name>
+    <description>TrainFileWriter</description>
+    <version>1.0</version>
+    <vendor>The Apache Software Foundation</vendor>
+    <configurationParameters>
+      <configurationParameter>
+        <name>outTrainFile</name>
+        <description>File to which annotations will be printed</description>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>goldFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>trainNum</name>
+        <description>num of training instance</description>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>true</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>outTestFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>goldFile</name>
+        <value>
+          <string>src/main/resources/data/sample.out</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>trainNum</name>
+        <value>
+          <integer>12000</integer>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>outTrainFile</name>
+        <value>
+          <string>src/main/resources/data/sample.train</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>outTestFile</name>
+        <value>
+          <string>src/main/resources/data/sample.test</string>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="descriptors.GeneMentionTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">edu.lti.cmu.hw1.typesys.GeneMention</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>false</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </processingResourceMetaData>
+</casConsumerDescription>

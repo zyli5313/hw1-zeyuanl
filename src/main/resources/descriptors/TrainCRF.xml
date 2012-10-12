@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>edu.lti.cmu.hw1.crf.TrainCRF</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>TrainCRF</name>
+    <description>TrainCRF</description>
+    <version/>
+    <vendor/>
+    <configurationParameters>
+      <configurationParameter>
+        <name>trainFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>testFile</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>modelPath</name>
+        <type>String</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+      <configurationParameter>
+        <name>iterations</name>
+        <type>Integer</type>
+        <multiValued>false</multiValued>
+        <mandatory>false</mandatory>
+      </configurationParameter>
+    </configurationParameters>
+    <configurationParameterSettings>
+      <nameValuePair>
+        <name>trainFile</name>
+        <value>
+          <string>src/main/resources/data/sample.train</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>testFile</name>
+        <value>
+          <string>src/main/resources/data/sample.test</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>modelPath</name>
+        <value>
+          <string>src/main/resources/data/crf.model</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>iterations</name>
+        <value>
+          <integer>100</integer>
+        </value>
+      </nameValuePair>
+    </configurationParameterSettings>
+    <typeSystemDescription>
+      <imports>
+        <import name="descriptors.CRFModelTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs/>
+        <outputs>
+          <type allAnnotatorFeatures="true">edu.lti.cmu.hw1.typesys.CRFModel</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>PatternFile</key>
+      <description>An optional external file containing regular expressions to match. File format is as follows: 
+		  - Lines starting with # or whitepsace are ignored 
+		  - Lines starting with % indicate an annotation type. 
+		  - All other lines are regular expressions. The language is that supported by Java 1.4. 
+		    If a regular expression is matched, it will be annotated with the last annotation type 
+		    declared (the nearest preceding line starting with %).</description>
+      <optional>true</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
