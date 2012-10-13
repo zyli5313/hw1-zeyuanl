@@ -22,6 +22,11 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
+/**
+ * This method is not used in the cpe engine!<br>
+ * A gene mention annotator which uses the naive POS heuristic method. <br>
+ * 
+ */
 public class GeneMentionAnnotator extends JCasAnnotator_ImplBase {
 
   private StanfordCoreNLP pipeline;
@@ -32,6 +37,13 @@ public class GeneMentionAnnotator extends JCasAnnotator_ImplBase {
     pipeline = new StanfordCoreNLP(props);
   }
 
+  /**
+   * This method uses naive POS heuristic to tag testing sentence and output their span.
+   *  
+   * @param text the testing sentence
+   * @param tokenArr temporary token array
+   * @return Map<Integer, Integer> the gene mention span pairs
+   */
   public Map<Integer, Integer> getGeneSpans(String text, List<String> tokenArr) {
     Map<Integer, Integer> begin2end = new HashMap<Integer, Integer>();
     Annotation document = new Annotation(text);

@@ -41,8 +41,14 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
+/**
+ * A gene mention annotator which uses the CRF model trained by previous training process.<br> 
+ * The annotator first reads the CRF model from the file and annotates them, 
+ * adding index to CAS using type system GeneMention.
+ * 
+ * @author Zeyuan Li (zeyuanl@cs.cmu.edu)
+ */
 public class GeneMentionAnnotatorCRF extends JCasAnnotator_ImplBase {
-
   public static final String BGM = "B_GM";
   public static final String IGM = "I_GM";
   public static final String OGM = "O";
@@ -56,6 +62,13 @@ public class GeneMentionAnnotatorCRF extends JCasAnnotator_ImplBase {
     pipeline = new StanfordCoreNLP(props);
   }
 
+  /**
+   * This method uses crf model to tag testing sentence and output their span.
+   *  
+   * @param crf the crf model
+   * @param text the testing sentence
+   * @return Map<Integer, Integer> the gene mention span pairs
+   */
   public Map<Integer, Integer> getGeneSpansCRF(CRF crf, String text) {
     Map<Integer, Integer> begin2end = new HashMap<Integer, Integer>();
     Annotation document = new Annotation(text);
@@ -107,6 +120,12 @@ public class GeneMentionAnnotatorCRF extends JCasAnnotator_ImplBase {
     return begin2end;
   }
 
+  /**
+   * Read the CRF model from the file. The path is specified in path attribute in type system "CRFModel".
+   * 
+   * @param path path where to read model file
+   * @return CRF read CRF model from path
+   */
   public CRF readModel(String path) throws IOException, ClassNotFoundException {
     ObjectInputStream ois = new ObjectInputStream(new FileInputStream(new File(path)));
     CRF crf = (CRF) ois.readObject();
@@ -115,7 +134,11 @@ public class GeneMentionAnnotatorCRF extends JCasAnnotator_ImplBase {
   }
 
   /**
+   * The process method process the document read by the FileSystemCollectionReader and 
+   * output the GeneMention type system to the CAS
+   * 
    * @see JCasAnnotator_ImplBase#process(JCas)
+   * @see FileSystemCollectionReader
    */
   public void process(JCas jcas) throws AnalysisEngineProcessException {
     // get model path
@@ -156,7 +179,7 @@ public class GeneMentionAnnotatorCRF extends JCasAnnotator_ImplBase {
       }
     }
   }
-
+  
   int getIdx(String sent, int end) {
     int idx = 0;
     for (int i = 0; i < end; i++)

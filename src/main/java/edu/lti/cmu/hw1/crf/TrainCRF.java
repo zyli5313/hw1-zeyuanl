@@ -3,35 +3,46 @@ package edu.lti.cmu.hw1.crf;
 import java.io.*;
 import java.util.*;
 import java.util.regex.*;
-import java.util.zip.*;
 
 import org.apache.uima.UimaContext;
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
-import org.apache.uima.tools.viewer.EntityResolver.Entity;
 
 import cc.mallet.fst.*;
 import cc.mallet.pipe.*;
 import cc.mallet.pipe.iterator.*;
 import cc.mallet.pipe.tsf.*;
 import cc.mallet.types.*;
-import cc.mallet.util.*;
-import edu.cmu.lti.oaqa.bio.entrezgene_wrapper.EntrezGeneExample;
-import edu.cmu.lti.oaqa.bio.entrezgene_wrapper.EntrezGeneWrapper;
 import edu.lti.cmu.hw1.typesys.CRFModel;
 
+/**
+ * A sequence tagging trainer using CRF model. It can be
+ * configured with the following parameters:
+ * <ul>
+ * <li><code>trainFile</code> - path to the training file</li>
+ * <li><code>testFile</code>  - path to the training file</li>
+ * <li><code>modelPath</code>  - path to the model file</li>
+ * <li><code>iterations</code> - number of max iteration in training process</li>
+ * </ul>
+ * @author Zeyuan Li (zeyuanl@cs.cmu.edu)
+ */
 public class TrainCRF extends JCasAnnotator_ImplBase {
-
   private String mtrainFile, mtestFile, mmodelPath;
   private int miter;
 
   // Must have 0-argument constructor for UIMA
   public TrainCRF(){}
   
+  /**
+   * This method trains the CRF model using orthographic and gene specific features.
+   * The model is persisted in local file when training finised, which path parameter is set in type system "CRFModel". 
+   * 
+   * @param trainingFile the path of the training file
+   * @param testingFile the path of the testing file
+   */
   public void TrainModelCRF(String trainingFile, String testingFile) throws IOException {
-
     ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
     int[][] conjunctions = new int[6][];
@@ -94,12 +105,6 @@ public class TrainCRF extends JCasAnnotator_ImplBase {
     CRFTrainerByLabelLikelihood trainer = new CRFTrainerByLabelLikelihood(crf);
     trainer.setGaussianPriorVariance(1.0);
 
-    // CRFTrainerByStochasticGradient trainer =
-    // new CRFTrainerByStochasticGradient(crf, 1.0);
-
-    // CRFTrainerByL1LabelLikelihood trainer =
-    // new CRFTrainerByL1LabelLikelihood(crf, 0.75);
-
     // trainer.addEvaluator(new PerClassAccuracyEvaluator(trainingInstances, "training"));
     trainer.addEvaluator(new PerClassAccuracyEvaluator(testingInstances, "testing"));
     trainer.addEvaluator(new TokenAccuracyEvaluator(testingInstances, "testing"));
@@ -111,14 +116,9 @@ public class TrainCRF extends JCasAnnotator_ImplBase {
     oos.writeObject(crf);
     oos.close();
   }
-  
-  private void readEntrezGene() {
-    EntrezGeneWrapper warpper = new EntrezGeneWrapper();
-    EntrezGeneExample wex = new EntrezGeneExample();
-  }
 
   /**
-   * Initializes this CAS Consumer with the parameters specified in the descriptor.
+   * Initializes this TrainCRF with the parameters specified in the descriptor.
    * 
    * @throws ResourceInitializationException
    *           if there is error in initializing the resources

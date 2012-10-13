@@ -43,17 +43,17 @@ import org.apache.uima.util.ProcessTrace;
 import edu.lti.cmu.hw1.typesys.GeneMention;
 
 /**
- * An example of CAS Consumer. <br>
- * AnnotationPrinter prints to an output file all annotations in the CAS. <br>
+ * An evaluator to evaluate performance of the annotator and write performance to the output file. <br>
  * Parameters needed by the AnnotationPrinter are
  * <ol>
  * <li>"outputFile" : file to which the output files should be written.</li>
+ * <li>"goldFile" : gold file the compare against.</li>
  * </ol>
  * <br>
  * These parameters are set in the initialize method to the values specified in the descriptor file. <br>
  * These may also be set by the application by using the setConfigParameterValue methods.
  * 
- * 
+ * @author Zeyuan Li (zeyuanl@cs.cmu.edu)
  */
 
 public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcessor {
@@ -102,7 +102,8 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
   /**
    * Processes the CasContainer which was populated by the TextAnalysisEngines. <br>
    * In this case, the CAS index is iterated over selected annotations and printed out into an
-   * output file
+   * output performance file, containing precision, recall and f-measure. <br>
+   * 
    * 
    * @param aCAS
    *          CasContainer which has been populated by the TAEs
@@ -131,31 +132,13 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
     int idx = 0, fromIndex = 0;
 
     // iterate and print annotations
-    //FSIndex gmIndex = jcas.getAnnotationIndex(GeneMention.type);
     FSIndex gmIndex = jcas.getIndexRepository().getIndex("edu.lti.cmu.hw1.idx.gmasc");
     Iterator annotationIter = gmIndex.iterator();
 
     while (annotationIter.hasNext()) {
       GeneMention annot = (GeneMention) annotationIter.next();
-      // System.out.println( annot.getType().getName() + " "+aText);
-      
-      /*int goldid = Integer.parseInt(goldList.get(idx).split("[|]")[0]);
-      while(goldid < Integer.parseInt(annot.getId())) {
-        idx++;
-        goldid = Integer.parseInt(goldList.get(idx).split("[|]")[0]);
-      }
-      if(goldid == Integer.parseInt(annot.getId())) {
-        int begin = Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0]);
-        while(begin < annot.getBegin()) {
-          idx++;
-          begin = Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0]);
-        }
-        if(begin == Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[0])) {
-          if(annot.getEnd() == Integer.parseInt(goldList.get(idx).split("[|]")[1].split(" ")[1]))
-            tpos++;
-        }
-      }*/
       String str = annot.getId()+"|"+annot.getBegin()+" "+annot.getEnd()+"|"+annot.getTag();
+      
       // the order of GeneMentions, which id are the same, appears in iterator is not granted 
       int find = goldStr.indexOf(str, fromIndex-100);
        if(find != -1) {
@@ -176,8 +159,9 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
     }
   }
   
-  /*
+  /**
    * Read gold standard gene mentions from sample.out
+   * 
    * */
   List<String> readGoldGM() {
     List<String> gmlist = new ArrayList<String>();
