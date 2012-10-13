@@ -38,7 +38,6 @@ import org.apache.uima.util.ProcessTrace;
 import edu.lti.cmu.hw1.typesys.GeneMention;
 
 /**
- * An example of CAS Consumer. <br>
  * AnnotationPrinter prints to an output file all annotations in the CAS. <br>
  * Parameters needed by the AnnotationPrinter are
  * <ol>
@@ -48,9 +47,7 @@ import edu.lti.cmu.hw1.typesys.GeneMention;
  * These parameters are set in the initialize method to the values specified in the descriptor file. <br>
  * These may also be set by the application by using the setConfigParameterValue methods.
  * 
- * 
  */
-
 public class AnnotationPrinter extends CasConsumer_ImplBase implements CasObjectProcessor {
   File outFile;
 
@@ -111,20 +108,12 @@ public class AnnotationPrinter extends CasConsumer_ImplBase implements CasObject
       throw new ResourceProcessException(e);
     }
 
-    /*
-     * boolean titleP = false; String docUri = null; Iterator it =
-     * jcas.getAnnotationIndex(SourceDocInfo.type).iterator(); if (it.hasNext()) { SourceDocInfo
-     * srcDocInfo = (SourceDocInfo) it.next(); docUri = srcDocInfo.getUri(); }
-     */
-
     // iterate and print annotations
-    //FSIndex gmIndex = jcas.getAnnotationIndex(GeneMention.type);
     FSIndex gmIndex = jcas.getIndexRepository().getIndex("edu.lti.cmu.hw1.idx.gmasc");
     Iterator annotationIter = gmIndex.iterator();
 
     while (annotationIter.hasNext()) {
       GeneMention annot = (GeneMention) annotationIter.next();
-      // System.out.println( annot.getType().getName() + " "+aText);
       try {
         fileWriter.write(annot.getId() + "|" + annot.getBegin() + " " + annot.getEnd() + "|"
                 + annot.getTag() + "\n");

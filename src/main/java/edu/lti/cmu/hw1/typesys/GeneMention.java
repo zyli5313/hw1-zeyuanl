@@ -10,9 +10,12 @@ import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.tcas.Annotation;
 
 
+import org.apache.uima.jcas.cas.StringArray;
+
+
 /** 
- * Updated by JCasGen Sun Oct 07 00:52:15 EDT 2012
- * XML source: /Users/lzy/Code/hw1-zeyuanl/src/main/resources/descriptors/GeneMentionAnnotator.xml
+ * Updated by JCasGen Wed Oct 10 21:43:50 EDT 2012
+ * XML source: /Users/lzy/Code/hw1-zeyuanl/src/main/resources/descriptors/GeneMentionTypeSystem.xml
  * @generated */
 public class GeneMention extends Annotation {
   /** @generated
@@ -123,6 +126,40 @@ public class GeneMention extends Annotation {
     if (GeneMention_Type.featOkTst && ((GeneMention_Type)jcasType).casFeat_tag == null)
       jcasType.jcas.throwFeatMissing("tag", "edu.lti.cmu.hw1.typesys.GeneMention");
     jcasType.ll_cas.ll_setStringValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tag, v);}    
+   
+    
+  //*--------------*
+  //* Feature: tokenArr
+
+  /** getter for tokenArr - gets 
+   * @generated */
+  public StringArray getTokenArr() {
+    if (GeneMention_Type.featOkTst && ((GeneMention_Type)jcasType).casFeat_tokenArr == null)
+      jcasType.jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    return (StringArray)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr)));}
+    
+  /** setter for tokenArr - sets  
+   * @generated */
+  public void setTokenArr(StringArray v) {
+    if (GeneMention_Type.featOkTst && ((GeneMention_Type)jcasType).casFeat_tokenArr == null)
+      jcasType.jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    jcasType.ll_cas.ll_setRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr, jcasType.ll_cas.ll_getFSRef(v));}    
+    
+  /** indexed getter for tokenArr - gets an indexed value - 
+   * @generated */
+  public String getTokenArr(int i) {
+    if (GeneMention_Type.featOkTst && ((GeneMention_Type)jcasType).casFeat_tokenArr == null)
+      jcasType.jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr), i);
+    return jcasType.ll_cas.ll_getStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr), i);}
+
+  /** indexed setter for tokenArr - sets an indexed value - 
+   * @generated */
+  public void setTokenArr(int i, String v) { 
+    if (GeneMention_Type.featOkTst && ((GeneMention_Type)jcasType).casFeat_tokenArr == null)
+      jcasType.jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    jcasType.jcas.checkArrayBounds(jcasType.ll_cas.ll_getRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr), i);
+    jcasType.ll_cas.ll_setStringArrayValue(jcasType.ll_cas.ll_getRefValue(addr, ((GeneMention_Type)jcasType).casFeatCode_tokenArr), i, v);}
   }
 
     

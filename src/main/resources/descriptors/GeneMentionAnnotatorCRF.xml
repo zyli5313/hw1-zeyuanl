@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>true</primitive>
+  <annotatorImplementationName>edu.lti.cmu.hw1.crf.GeneMentionAnnotatorCRF</annotatorImplementationName>
+  <analysisEngineMetaData>
+    <name>gene mention annotatorCRF</name>
+    <description>gene mention annotatorCRF</description>
+    <version/>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <typeSystemDescription>
+      <imports>
+        <import name="descriptors.CRFModelTypeSystem"/>
+        <import name="descriptors.GeneMentionTypeSystem"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
+    <fsIndexCollection>
+      <fsIndexes>
+        <fsIndexDescription>
+          <label>edu.lti.cmu.hw1.idx.gmasc</label>
+          <typeName>edu.lti.cmu.hw1.typesys.GeneMention</typeName>
+          <kind>sorted</kind>
+          <keys>
+            <fsIndexKey>
+              <featureName>id</featureName>
+              <comparator>standard</comparator>
+            </fsIndexKey>
+          </keys>
+        </fsIndexDescription>
+      </fsIndexes>
+    </fsIndexCollection>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">edu.lti.cmu.hw1.typesys.CRFModel</type>
+        </inputs>
+        <outputs>
+          <type allAnnotatorFeatures="true">edu.lti.cmu.hw1.typesys.GeneMention</type>
+        </outputs>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+    <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <externalResourceDependencies>
+    <externalResourceDependency>
+      <key>PatternFile</key>
+      <description>An optional external file containing regular expressions to match. File format is as follows: 
+		  - Lines starting with # or whitepsace are ignored 
+		  - Lines starting with % indicate an annotation type. 
+		  - All other lines are regular expressions. The language is that supported by Java 1.4. 
+		    If a regular expression is matched, it will be annotated with the last annotation type 
+		    declared (the nearest preceding line starting with %).</description>
+      <optional>true</optional>
+    </externalResourceDependency>
+  </externalResourceDependencies>
+</analysisEngineDescription>

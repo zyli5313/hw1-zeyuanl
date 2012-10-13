@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Oct 07 00:52:15 EDT 2012
+ * Updated by JCasGen Wed Oct 10 21:43:50 EDT 2012
  * @generated */
 public class GeneMention_Type extends Annotation_Type {
   /** @generated */
@@ -97,6 +97,43 @@ public class GeneMention_Type extends Annotation_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_tag, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_tokenArr;
+  /** @generated */
+  final int     casFeatCode_tokenArr;
+  /** @generated */ 
+  public int getTokenArr(int addr) {
+        if (featOkTst && casFeat_tokenArr == null)
+      jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr);
+  }
+  /** @generated */    
+  public void setTokenArr(int addr, int v) {
+        if (featOkTst && casFeat_tokenArr == null)
+      jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    ll_cas.ll_setRefValue(addr, casFeatCode_tokenArr, v);}
+    
+   /** @generated */
+  public String getTokenArr(int addr, int i) {
+        if (featOkTst && casFeat_tokenArr == null)
+      jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i);
+  return ll_cas.ll_getStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i);
+  }
+   
+  /** @generated */ 
+  public void setTokenArr(int addr, int i, String v) {
+        if (featOkTst && casFeat_tokenArr == null)
+      jcas.throwFeatMissing("tokenArr", "edu.lti.cmu.hw1.typesys.GeneMention");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i);
+    ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_tokenArr), i, v);
+  }
+ 
 
 
 
@@ -117,6 +154,10 @@ public class GeneMention_Type extends Annotation_Type {
  
     casFeat_tag = jcas.getRequiredFeatureDE(casType, "tag", "uima.cas.String", featOkTst);
     casFeatCode_tag  = (null == casFeat_tag) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tag).getCode();
+
+ 
+    casFeat_tokenArr = jcas.getRequiredFeatureDE(casType, "tokenArr", "uima.cas.StringArray", featOkTst);
+    casFeatCode_tokenArr  = (null == casFeat_tokenArr) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_tokenArr).getCode();
 
   }
 }
