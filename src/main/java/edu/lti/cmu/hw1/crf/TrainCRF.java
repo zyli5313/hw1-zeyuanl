@@ -10,6 +10,7 @@ import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.resource.ResourceInitializationException;
+import org.apache.uima.tools.viewer.EntityResolver.Entity;
 
 import cc.mallet.fst.*;
 import cc.mallet.pipe.*;
@@ -17,6 +18,8 @@ import cc.mallet.pipe.iterator.*;
 import cc.mallet.pipe.tsf.*;
 import cc.mallet.types.*;
 import cc.mallet.util.*;
+import edu.cmu.lti.oaqa.bio.entrezgene_wrapper.EntrezGeneExample;
+import edu.cmu.lti.oaqa.bio.entrezgene_wrapper.EntrezGeneWrapper;
 import edu.lti.cmu.hw1.typesys.CRFModel;
 
 public class TrainCRF extends JCasAnnotator_ImplBase {
@@ -31,9 +34,13 @@ public class TrainCRF extends JCasAnnotator_ImplBase {
 
     ArrayList<Pipe> pipes = new ArrayList<Pipe>();
 
-    int[][] conjunctions = new int[2][];
+    int[][] conjunctions = new int[6][];
     conjunctions[0] = new int[] { -1 };
     conjunctions[1] = new int[] { 1 };
+    conjunctions[2] = new int[] { -2 };
+    conjunctions[3] = new int[] { 2 };
+    conjunctions[4] = new int[] { 0, 1 };
+    conjunctions[5] = new int[] { -1, 0 };
 
     pipes.add(new SimpleTaggerSentence2TokenSequence());
     pipes.add(new OffsetConjunctions(conjunctions));
@@ -41,10 +48,29 @@ public class TrainCRF extends JCasAnnotator_ImplBase {
     pipes.add(new TokenTextCharSuffix("C1=", 1));
     pipes.add(new TokenTextCharSuffix("C2=", 2));
     pipes.add(new TokenTextCharSuffix("C3=", 3));
+    pipes.add(new TokenTextCharPrefix("P1=", 1));
+    pipes.add(new TokenTextCharPrefix("P1=", 1));
+    pipes.add(new TokenTextCharPrefix("P1=", 1));
     pipes.add(new RegexMatches("CAPITALIZED", Pattern.compile("^\\p{Lu}.*")));
     pipes.add(new RegexMatches("STARTSNUMBER", Pattern.compile("^[0-9].*")));
     pipes.add(new RegexMatches("HYPHENATED", Pattern.compile(".*\\-.*")));
     pipes.add(new RegexMatches("DOLLARSIGN", Pattern.compile(".*\\$.*")));
+    pipes.add(new RegexMatches("HASDASH", Pattern.compile(".*-.*")));
+    pipes.add(new RegexMatches("HASDIGIT", Pattern.compile(".*[0-9].*")));
+    pipes.add(new RegexMatches("ALPHNUM", Pattern.compile("[A-Za-z0-9]+")));
+    pipes.add(new RegexMatches("ALLCAP", Pattern.compile("[A-Z]+")));
+    pipes.add(new RegexMatches("MIXCASE", Pattern.compile("[A-Za-z]+")));
+    pipes.add(new RegexMatches("HASBRACKET", Pattern.compile(".*[()].*")));
+    pipes.add(new RegexMatches("PARTOFGENE", Pattern.compile(".*gene|.*like|.*ase|homeo.*")));
+    // additional features
+    /*
+    pipes.add(new RegexMatches("PUNC", Pattern.compile(".*[.,-=$?/!\"].*")));
+    pipes.add(new RegexMatches("SINGLEDIGIT", Pattern.compile("[0-9]")));
+    pipes.add(new RegexMatches("DOUBLEDIGIT", Pattern.compile("[0-9]{2}")));
+    pipes.add(new RegexMatches("ENDDASH", Pattern.compile(".*-")));
+    pipes.add(new RegexMatches("TWOCAPS", Pattern.compile("[A-Z]{2}")));
+    pipes.add(new RegexMatches("THREECAPS", Pattern.compile("[A-Z]{3}")));*/
+    
     pipes.add(new TokenFirstPosition("FIRSTTOKEN"));
     pipes.add(new TokenSequence2FeatureVectorSequence());
 
@@ -84,6 +110,11 @@ public class TrainCRF extends JCasAnnotator_ImplBase {
     ObjectOutputStream oos = new ObjectOutputStream(fos);
     oos.writeObject(crf);
     oos.close();
+  }
+  
+  private void readEntrezGene() {
+    EntrezGeneWrapper warpper = new EntrezGeneWrapper();
+    EntrezGeneExample wex = new EntrezGeneExample();
   }
 
   /**

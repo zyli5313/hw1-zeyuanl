@@ -56,7 +56,7 @@
       <nameValuePair>
         <name>iterations</name>
         <value>
-          <integer>100</integer>
+          <integer>500</integer>
         </value>
       </nameValuePair>
     </configurationParameterSettings>

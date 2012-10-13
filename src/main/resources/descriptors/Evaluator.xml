@@ -42,7 +42,21 @@
       </imports>
     </typeSystemDescription>
     <typePriorities/>
-    <fsIndexCollection/>
+    <fsIndexCollection>
+      <fsIndexes>
+        <fsIndexDescription>
+          <label>edu.lti.cmu.hw1.idx.gmasc</label>
+          <typeName>edu.lti.cmu.hw1.typesys.GeneMention</typeName>
+          <kind>sorted</kind>
+          <keys>
+            <fsIndexKey>
+              <featureName>id</featureName>
+              <comparator>standard</comparator>
+            </fsIndexKey>
+          </keys>
+        </fsIndexDescription>
+      </fsIndexes>
+    </fsIndexCollection>
     <capabilities>
       <capability>
         <inputs>

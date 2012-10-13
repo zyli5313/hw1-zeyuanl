@@ -156,8 +156,9 @@ public class Evaluator extends CasConsumer_ImplBase implements CasObjectProcesso
         }
       }*/
       String str = annot.getId()+"|"+annot.getBegin()+" "+annot.getEnd()+"|"+annot.getTag();
-      int find = goldStr.indexOf(str, fromIndex);
-      if(find != -1) {
+      // the order of GeneMentions, which id are the same, appears in iterator is not granted 
+      int find = goldStr.indexOf(str, fromIndex-100);
+       if(find != -1) {
         fromIndex = find;
         tpos++;
       }
