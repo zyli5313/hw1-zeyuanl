@@ -38,19 +38,19 @@
       <nameValuePair>
         <name>trainFile</name>
         <value>
-          <string>src/main/resources/data/sample.train</string>
+          <string>data/sample.train</string>
         </value>
       </nameValuePair>
       <nameValuePair>
         <name>testFile</name>
         <value>
-          <string>src/main/resources/data/sample.test</string>
+          <string>data/sample.test</string>
         </value>
       </nameValuePair>
       <nameValuePair>
         <name>modelPath</name>
         <value>
-          <string>src/main/resources/descriptors/crf.model</string>
+          <string>data/crf.model</string>
         </value>
       </nameValuePair>
       <nameValuePair>
