@@ -50,7 +50,7 @@
       <nameValuePair>
         <name>modelPath</name>
         <value>
-          <string>src/main/resources/data/crf.model</string>
+          <string>src/main/resources/descriptors/crf.model</string>
         </value>
       </nameValuePair>
       <nameValuePair>
