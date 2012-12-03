@@ -54,12 +54,6 @@
     </configurationParameters>
     <configurationParameterSettings>
       <nameValuePair>
-        <name>InputDirectory</name>
-        <value>
-          <string>src/main/resources/data</string>
-        </value>
-      </nameValuePair>
-      <nameValuePair>
         <name>BrowseSubdirectories</name>
         <value>
           <boolean>false</boolean>
@@ -75,6 +69,12 @@
         <name>FileName</name>
         <value>
           <string>hw1.in</string>
+        </value>
+      </nameValuePair>
+      <nameValuePair>
+        <name>InputDirectory</name>
+        <value>
+          <string>.</string>
         </value>
       </nameValuePair>
     </configurationParameterSettings>
